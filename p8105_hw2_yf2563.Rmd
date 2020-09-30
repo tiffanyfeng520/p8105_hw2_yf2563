@@ -10,3 +10,30 @@ output: github_document
 library(tidyverse)
 library(readxl)
 ```
+
+## Problem 1
+
+- specify the sheet in the Excel file and to omit non-data entries (rows with notes / figures; columns containing notes) using arguments in read_excel
+- use reasonable variable names
+- omit rows that do not include dumpster-specific data
+- round the number of sports balls to the nearest integer and converts the result to an integer variable (using as.integer)
+
+First, define a path and read the dataset
+
+```{r}
+path_to_data = './data/Trash-Wheel-Collection-Totals-8-6-19.xlsx'
+trashwheel_df = 
+	read_xlsx(
+		path = path_to_data,
+		sheet = "Mr. Trash Wheel",
+		range = cell_cols("A:N")) %>% 
+	janitor::clean_names() %>% 
+	drop_na(dumpster) %>% 
+	mutate(
+		sports_balls = round(sports_balls, digits = 0),
+		sports_balls = as.integer(sports_balls)
+	) %>% 
+  relocate(dumpster,month,year,date,sports_balls)
+trashwheel_df
+```
+
