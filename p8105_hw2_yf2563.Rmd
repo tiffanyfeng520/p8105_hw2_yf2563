@@ -224,7 +224,79 @@ question5_df =
 
 Thus, Of the stations that serve the A train, `r nrow(question5_df)` are ADA compliant.
 
+## Problem 3
+
+First, clean the data in pols-month.csv. 
+
+- Use separate() to break up the variable mon into integer variables year, month, and day
+- replace month number with month name
+- create a president variable taking values gop and dem, and remove prez_dem and prez_gop; and remove the day variable.
+
+```{r, message=FALSE}
+path_pols_month = "./data/pols-month.csv"
+
+pols_month_df = 
+  read_csv(path_pols_month) %>%
+  janitor::clean_names() %>%
+  separate(mon,c("year","month","day")) %>%
+  mutate(year = as.integer(year), month = as.integer(month), day = as.integer(day)) %>%
+  mutate(month = recode(month, `1` = "Jan", `2` = "Feb", `3` = "Mar", `4` = "Apr", `5` = "May" , `6`= "Jun", `7` = "Jul", `8` = "Aug", `9` = "Sep", `10` = "Oct", `11` = "Nov", `12` = "Dec")) %>%
+  mutate(president = ifelse(prez_dem == 1, "dem", "gop")) %>%
+  select(-prez_dem,-prez_gop,-day) %>%
+  arrange(desc(row_number()))
+
+pols_month_df
+```
 
 
+Second, clean the data in snp.csv using a similar process to the above. 
+
+- For consistency across datasets, arrange according to year and month, and organize so that year and month are the leading columns.
+
+```{r, message=FALSE}
+path_snp = './data/snp.csv'
+
+snp_df = 
+  read_csv(path_snp) %>%
+  janitor::clean_names() %>%
+  separate(date,c("month","day","year")) %>%
+  mutate(
+    year = as.integer(year), 
+    month = as.integer(month), 
+    day = as.integer(day)) %>%
+  mutate(month = recode(month, `1` = "Jan", `2` = "Feb", `3` = "Mar", `4` = "Apr", `5` = "May" , `6`= "Jun", `7` = "Jul", `8` = "Aug", `9` = "Sep", `10` = "Oct", `11` = "Nov", `12` = "Dec")) %>%
+  select(year,month,close)
+
+snp_df
+```
+
+Third, tidy the unemployment data.
+
+- Switching from “wide” to “long” format
+- Ensuring that key variables have the same name and take the same values.
+
+```{r, message=FALSE}
+path_unemployment = './data/unemployment.csv'
+
+unemployment_df = 
+  read_csv(path_unemployment) %>%  
+  pivot_longer(Jan:Dec,
+               names_to = "month", 
+               values_to = "unemployment") %>%
+  select(year = Year, everything()) %>%
+  arrange(desc(row_number()))
+
+unemployment_df
+```
+
+Join the datasets by merging snp into pols, and merging unemployment into the result.
+
+```{r}
+merge_df = left_join(pols_month_df, snp_df, by = c("year","month"))
+
+merge_df = left_join(merge_df, unemployment_df, by = c("year","month"))
+
+merge_df
+```
 
 
