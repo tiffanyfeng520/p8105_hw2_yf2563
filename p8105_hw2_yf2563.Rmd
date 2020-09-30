@@ -90,3 +90,27 @@ precip_df
 ```
 
 
+### Summary of the data:
+
+```{r}
+summary(trashwheel_df)
+summary(precip_df)
+```
+
+
+The first dataset is about the information from the Mr. Trashwheel trash collector in Baltimore, Maryland:
+
+- After filtering, there are a total of `r nrow(trashwheel_df)` rows and `r ncol(trashwheel_df)` columns. 
+- The variables include `r names(trashwheel_df)`
+
+The second dataset is about the month precipitation in 2017 and 2018:
+
+- After filtering, there are a total of `r nrow(precip_df)` rows and `r ncol(precip_df)` columns. 
+- The variables include `r names(precip_df)`
+- The median number of sports balls found in a dumpster in 2017 was `r trashwheel_df %>% filter(year == 2017) %>% pull(sports_balls) %>% median()`
+- The median number of sports balls found in a dumpster in 2018 was `r trashwheel_df %>% filter(year == 2018) %>% pull(sports_balls) %>% median()`
+- The total precipitation in 2018 was `r precip_df %>% filter(year == 2018) %>% pull(total) %>% sum()` inches.
+- The total precipitation in 2017 was `r precip_df %>% filter(year == 2017) %>% pull(total) %>% sum()` inches.
+
+
+
