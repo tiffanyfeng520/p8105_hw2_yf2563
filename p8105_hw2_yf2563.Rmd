@@ -112,5 +112,23 @@ The second dataset is about the month precipitation in 2017 and 2018:
 - The total precipitation in 2018 was `r precip_df %>% filter(year == 2018) %>% pull(total) %>% sum()` inches.
 - The total precipitation in 2017 was `r precip_df %>% filter(year == 2017) %>% pull(total) %>% sum()` inches.
 
+## Problem 2
+
+Read and clean the data:
+
+- retain line, station, name, station latitude / longitude, routes served, entry, vending, entrance type, and ADA compliance
+- Convert the entry variable from character (YES vs NO) to a logical variable (the ifelse or recode function may be useful).
+
+```{r, message=FALSE}
+path_prob2 = './data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv'
+
+subway_df =
+  read_csv(path_prob2) %>%
+  janitor::clean_names() %>% 
+  select(line, station_name, station_latitude, station_longitude, route1:route11, entry, vending, entrance_type, ada) %>%
+  mutate(entry = recode(entry, "YES" = T, "NO" = F))
+
+subway_df
+```
 
 
