@@ -37,3 +37,37 @@ trashwheel_df =
 trashwheel_df
 ```
 
+Read and clean precipitation data for 2017 and 2018. 
+
+- omit rows without precipitation data and add a variable year
+- combine precipitation datasets and convert month to a character variable
+
+```{r}
+# data for 2018
+precip_2018 = 
+	read_excel(
+		path = path_to_data,
+		sheet = "2018 Precipitation",
+		range = "A2:B14"
+	) %>% 
+	janitor::clean_names() %>% 
+	drop_na(total) %>% 
+	mutate(year = 2018) %>% 
+	relocate(year)
+```
+
+```{r}
+# data for 2017
+precip_2017 = 
+	read_excel(
+		path = path_to_data,
+		sheet = "2017 Precipitation",
+		range = "A2:B14"
+	) %>% 
+	janitor::clean_names() %>% 
+	drop_na(total) %>% 
+	mutate(year = 2017) %>% 
+	relocate(year)
+```
+
+
