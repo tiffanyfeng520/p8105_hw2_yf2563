@@ -146,3 +146,44 @@ The data set contains information related to each entrance and exit for each sub
 
 
 
+### Answer the following questions using these data:
+
+##### 1. How many distinct stations are there? 
+
+```{r}
+question1_df =
+  subway_df %>% 
+  distinct(line, station_name, .keep_all = T)
+```
+
+Thus, there are `r dim(question1_df)[0]` distinct stations
+
+
+##### 2. How many stations are ADA compliant?
+
+```{r}
+question2_df = 
+  question1_df %>% 
+  filter(ada == TRUE)
+```
+
+Thus, `r nrow(question2_df)` stations are ADA compliant
+
+##### 3. What proportion of station entrances / exits without vending allow entrance?
+
+```{r}
+question3_without_vending = 
+  subway_df %>% 
+  filter(vending == "NO")
+
+question3_without_vending_allow_entrance = 
+  subway_df %>% 
+  filter(vending == "NO") %>% 
+  filter(entry == T)
+
+question3_proportion = nrow(question3_without_vending_allow_entrance) / nrow(question3_without_vending)
+```
+
+Thus, the proportion of station entrances / exits without vending allow entrance is `r question3_proportion`
+
+
