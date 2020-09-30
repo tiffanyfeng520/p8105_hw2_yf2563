@@ -156,7 +156,7 @@ question1_df =
   distinct(line, station_name, .keep_all = T)
 ```
 
-Thus, there are `r dim(question1_df)[0]` distinct stations
+Thus, there are `r nrow(question1_df)` distinct stations
 
 
 ##### 2. How many stations are ADA compliant?
@@ -298,5 +298,36 @@ merge_df = left_join(merge_df, unemployment_df, by = c("year","month"))
 
 merge_df
 ```
+
+### Summary for the three datasets
+
+
+The first dataset is pols_month:
+
+- After filtering, there are a total of `r nrow(pols_month_df)` rows and `r ncol(pols_month_df)` columns, thus the dimension is `r dim(pols_month_df)`.
+- The variables include `r names(pols_month_df)`
+- In this dataset, 'dem' means democratic party, 'gop' means republican party
+- The variables of 'gov_gop, sen_gop, rep_gop, gov_dem, sen_dem, rep_dem' represents the number of governors or senators from republican or democratic party
+- The range of years is `r range(pols_month_df$year)`
+
+The second dataset is snp:
+
+- After filtering, there are a total of `r nrow(snp_df)` rows and `r ncol(snp_df)` columns, thus the dimension is `r dim(snp_df)`.
+- The variables include `r names(snp_df)`
+- The range of years is `r range(snp_df$year)`
+
+The third dataset is about unemployment:
+
+- After filtering, there are a total of `r nrow(unemployment_df)` rows and `r ncol(unemployment_df)` columns, thus the dimension is `r dim(unemployment_df)`.
+- The variables include `r names(unemployment_df)`
+- The range of years is `r range(unemployment_df$year)`
+
+The resulting dataset is the merge of all of the three datasets:
+
+
+- After filtering, there are a total of `r nrow(merge_df)` rows and `r ncol(merge_df)` columns, thus the dimension is `r dim(merge_df)`.
+- The variables include `r names(merge_df)`
+- The range of years is `r range(merge_df$year)`
+
 
 
