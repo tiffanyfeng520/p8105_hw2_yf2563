@@ -1,0 +1,12 @@
+---
+title: "p8105_hw2_yf2563"
+author: "Yatong Feng"
+date: "9/30/2020"
+output: github_document
+---
+
+```{r setup, message=FALSE}
+#load packages
+library(tidyverse)
+library(readxl)
+```
