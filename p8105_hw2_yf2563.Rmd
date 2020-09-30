@@ -187,3 +187,44 @@ question3_proportion = nrow(question3_without_vending_allow_entrance) / nrow(que
 Thus, the proportion of station entrances / exits without vending allow entrance is `r question3_proportion`
 
 
+Reformat data so that route number and route name are distinct variables.
+```{r}
+reformat_subway_df =
+  question1_df %>%
+  mutate(route8 = as.character(route8),
+         route9 = as.character(route9),
+         route10 = as.character(route10),
+         route11 = as.character(route11)) %>%
+  pivot_longer(col = route1:route11,
+               names_to = "route_name", 
+               values_to = "route_number") %>%
+  arrange(route_name, route_number)
+reformat_subway_df
+```
+
+
+##### 4. How many distinct stations serve the A train? 
+```{r}
+question4_df =
+  question1_df %>% 
+  filter(route1 == "A"|route2 =="A"|route3 == "A"|route4 =="A"|
+           route5 == "A"|route6 =="A"|route7 == "A"|route8 =="A"|
+           route9 == "A"|route10 =="A"|route11 =="A")
+```
+
+Thus, there are `r nrow(question4_df)` distinct stations serve the A train
+
+##### 5.Of the stations that serve the A train, how many are ADA compliant?
+
+```{r}
+question5_df = 
+  question4_df %>% 
+  filter(ada == TRUE)
+```
+
+Thus, Of the stations that serve the A train, `r nrow(question5_df)` are ADA compliant.
+
+
+
+
+
