@@ -131,4 +131,18 @@ subway_df =
 subway_df
 ```
 
+### Summary for the NYC subway data
+
+The data set contains information related to each entrance and exit for each subway station in NYC:
+
+- The data cleaning procedure include:
+  - Read the data through read_csv()
+  - Clean the column names through clean_names()
+  - Retain the required variables through select()
+  - Convert the entry variable from character (YES vs NO) to a logical variable through recode()
+- After filtering, there are a total of `r nrow(subway_df)` rows and `r ncol(subway_df)` columns, thus the dimension of the dataset is `r dim(subway_df)`.
+- The variables include `r names(subway_df)`
+- This data is not tidy since the data type of variables route 1 - 11 contains both chr and dbl
+
+
 
